@@ -1,0 +1,54 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://artisan-ai.dev/manifest.schema.json",
+  "title": "Artisan Skill Suite Delegation Manifest Schema",
+  "type": "object",
+  "required": [
+    "name",
+    "version",
+    "strategy",
+    "fallbackSkill",
+    "dispatcher",
+    "skills",
+    "conflictResolution",
+    "compatibleAgents"
+  ],
+  "properties": {
+    "$schema": { "type": "string" },
+    "name": { "type": "string" },
+    "version": { "type": "string" },
+    "strategy": { "type": "string", "enum": ["progressive-disclosure", "monolithic"] },
+    "fallbackSkill": { "type": "string" },
+    "dispatcher": {
+      "type": "object",
+      "required": ["tier1TokenBudget", "tier2TokenBudget", "measuredReduction"],
+      "properties": {
+        "tier1TokenBudget": { "type": "number" },
+        "tier2TokenBudget": { "type": "number" },
+        "measuredReduction": { "type": "object" }
+      }
+    },
+    "skills": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "version", "priority", "path", "triggers"],
+        "properties": {
+          "id": { "type": "string" },
+          "version": { "type": "string" },
+          "priority": { "type": "number" },
+          "path": { "type": "string" },
+          "triggers": {
+            "type": "object",
+            "required": ["primary", "secondary"]
+          },
+          "excludes": { "type": "array", "items": { "type": "string" } },
+          "requires": { "type": "array", "items": { "type": "string" } },
+          "envVars": { "type": "array", "items": { "type": "string" } }
+        }
+      }
+    },
+    "conflictResolution": { "type": "string" },
+    "compatibleAgents": { "type": "array", "items": { "type": "string" } }
+  }
+}

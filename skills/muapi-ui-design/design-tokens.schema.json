@@ -1,0 +1,47 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://design-tokens.org/muapi-design-tokens.schema.json",
+  "title": "Muapi Design Tokens Schema",
+  "description": "JSON schema for DTCG and Style Dictionary compliant design tokens",
+  "type": "object",
+  "required": ["name", "version", "primitive", "semantic", "platforms", "rtl"],
+  "properties": {
+    "$schema": { "type": "string" },
+    "name": { "type": "string" },
+    "version": { "type": "string" },
+    "primitive": {
+      "type": "object",
+      "required": ["color", "space", "radius", "font", "duration", "easing", "shadow"],
+      "properties": {
+        "color": { "type": "object" },
+        "space": { "type": "object" },
+        "radius": { "type": "object" },
+        "font": { "type": "object" },
+        "duration": { "type": "object" },
+        "easing": { "type": "object" },
+        "shadow": { "type": "object" }
+      }
+    },
+    "semantic": {
+      "type": "object",
+      "required": ["dark", "light"],
+      "properties": {
+        "dark": { "type": "object" },
+        "light": { "type": "object" }
+      }
+    },
+    "platforms": {
+      "type": "object",
+      "required": ["web", "ios", "android"],
+      "properties": {
+        "web": { "type": "object" },
+        "ios": { "type": "object" },
+        "android": { "type": "object" }
+      }
+    },
+    "rtl": {
+      "type": "object",
+      "required": ["logicalProperties", "fontFamilyOverride", "mirroredIcons"]
+    }
+  }
+}

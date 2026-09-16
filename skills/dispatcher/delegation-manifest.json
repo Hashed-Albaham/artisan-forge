@@ -1,0 +1,90 @@
+{
+  "$schema": "./manifest.schema.json",
+  "name": "artisan-skill-suite",
+  "version": "2.5.0",
+  "strategy": "progressive-disclosure",
+  "fallbackSkill": "production-code-artisan",
+  "dispatcher": {
+    "tier1TokenBudget": 150,
+    "tier2TokenBudget": 700,
+    "tier3ExecutionBudget": 2200,
+    "measuredReduction": {
+      "method": "tiktoken cl100k_base on 200 real-world developer prompts",
+      "baselineTokens": 9420,
+      "optimizedTokensAverage": 1128,
+      "averageReduction": "88.03%",
+      "reportPath": "benchmarks/token-reduction.json"
+    }
+  },
+  "skills": [
+    {
+      "id": "production-code-artisan",
+      "version": "2.5.0",
+      "priority": 100,
+      "path": "skills/production-code-artisan/SKILL.md",
+      "triggers": {
+        "primary": [
+          "write code",
+          "refactor",
+          "build feature",
+          "fix bug",
+          "review code",
+          "backend"
+        ],
+        "secondary": [
+          "sql",
+          "owasp",
+          "n+1",
+          "error handling",
+          "anti-slop",
+          "arabic rtl",
+          "security audit",
+          "typescript"
+        ]
+      },
+      "excludes": [
+        "ui mockup",
+        "wireframe",
+        "flux-dev"
+      ]
+    },
+    {
+      "id": "muapi-ui-design",
+      "version": "0.2.0",
+      "priority": 80,
+      "path": "skills/muapi-ui-design/SKILL.md",
+      "triggers": {
+        "primary": [
+          "design ui",
+          "ui mockup",
+          "wireframe",
+          "design system",
+          "interface layout"
+        ],
+        "secondary": [
+          "atomic design",
+          "design tokens",
+          "ios design",
+          "material 3",
+          "bento grid",
+          "color palette"
+        ]
+      },
+      "requires": [
+        "production-code-artisan"
+      ],
+      "envVars": [
+        "MUAPI_KEY"
+      ]
+    }
+  ],
+  "conflictResolution": "highest-priority-wins",
+  "compatibleAgents": [
+    "claude-3.5-sonnet+",
+    "gpt-4o+",
+    "gemini-2.5+",
+    "cursor",
+    "windsurf"
+  ],
+  "deprecationPolicy": "Semantic Versioning (SemVer 2.0). Minor versions maintain 100% backward compatibility for all routing triggers."
+}

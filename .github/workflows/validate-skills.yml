@@ -1,0 +1,33 @@
+name: Validate Skills Suite
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+
+jobs:
+  validate-schemas-and-scripts:
+    name: JSON Schema & Shell Script Validation
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Setup Node.js 20
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Validate Shell Script Syntax
+        run: |
+          bash -n skills/muapi-ui-design/generate-mockup.sh
+
+      - name: Validate JSON Schemas
+        run: |
+          node -e '
+            const fs = require("fs");
+            JSON.parse(fs.readFileSync("skills/muapi-ui-design/design-tokens.json"));
+            JSON.parse(fs.readFileSync("skills/muapi-ui-design/design-tokens.schema.json"));
+            JSON.parse(fs.readFileSync("skills/dispatcher/delegation-manifest.json"));
+            JSON.parse(fs.readFileSync("skills/dispatcher/manifest.schema.json"));
+            console.log("All JSON files and schemas are valid!");
+          '

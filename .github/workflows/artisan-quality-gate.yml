@@ -1,0 +1,81 @@
+name: Artisan Quality Gate & Anti-Slop Audit
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  # Stage 1: Fast Secrets & Credential Leak Scan
+  secrets:
+    name: Gitleaks Secrets Audit
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Gitleaks Action
+        uses: gitleaks/gitleaks-action@v2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  # Stage 2: Static Application Security Testing (SAST)
+  sast:
+    name: Semgrep OWASP Top 10 SAST
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Semgrep Security Scan
+        uses: returntocorp/semgrep-action@v1
+        with:
+          config: >-
+            p/owasp-top-ten
+            p/typescript
+            p/nodejsscan
+      - name: Upload SAST SARIF report
+        uses: github/codeql-action/upload-sarif@v3
+        if: always()
+        with:
+          sarif_file: semgrep.sarif
+
+  # Stage 3: Strict Static Type Checking & AST Anti-Slop Analysis
+  artisan-code-health:
+    name: Strict Typecheck & AST Anti-Slop
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Setup Node.js 20
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Strict Typecheck (Zero Errors)
+        run: npx tsc --noEmit
+
+      - name: AST Anti-Slop & Quality Gate Audit
+        run: npx tsx scripts/detect-slop.ts
+
+  # Stage 4: Software Composition Analysis (SCA) Vulnerability Audit
+  sca:
+    name: Trivy Dependency & FS Audit
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install & Run Trivy FS Audit
+        run: |
+          curl -sfL https://raw.githubusercontent.com/aquasecurity/trivy/main/contrib/install.sh | sh -s -- -b /usr/local/bin
+          trivy fs --exit-code 1 --severity HIGH,CRITICAL --format sarif --output trivy.sarif .
+      - name: Upload Trivy SARIF report
+        uses: github/codeql-action/upload-sarif@v3
+        if: always()
+        with:
+          sarif_file: trivy.sarif

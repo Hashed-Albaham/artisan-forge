@@ -1,0 +1,27 @@
+{
+  "platform": "ios",
+  "theme": "dark",
+  "aspectRatio": "9:16",
+  "title": "Aura Staking Vault",
+  "atoms": [
+    "Balance Counter ($48,291.50) in 32px Major Second typography",
+    "Pill Badge (+14.2% APY) with emerald indicator",
+    "One-Tap Primary Action Button (Deposit Staking)",
+    "Haptic Feedback Interactive Toggles"
+  ],
+  "molecules": [
+    "Portfolio Sparkline Chart with 24h Delta",
+    "Asset Tile (ETH, SOL, AVAX) with live balance and yield rating",
+    "Biometric FaceID Confirmation Prompt"
+  ],
+  "organisms": [
+    "iOS Safe Area Navigation Bar with Wallet Selector",
+    "Active Staking Positions Bento Card",
+    "Sticky Bottom Action Bar with 34px Home Indicator Margin"
+  ],
+  "wcagCompliance": {
+    "contrastRatio": "14.8:1 (Text #F8FAFC on Canvas #020617)",
+    "touchTarget": "48pt x 48pt",
+    "reducedMotionSupported": true
+  }
+}

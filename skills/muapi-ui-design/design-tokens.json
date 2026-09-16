@@ -1,0 +1,14 @@
+{
+  "name": "muapi-ui-design-tokens",
+  "version": "0.1.0",
+  "platforms": {
+    "web": { "viewport": "1440x900", "grid": "12-column, 24px gutter" },
+    "ios": { "viewport": "393x852", "safeAreaTop": "44px", "safeAreaBottom": "34px" },
+    "android": { "viewport": "412x915", "elevation": "Material 3" }
+  },
+  "themes": {
+    "emerald-slate": { "background": "#061A14", "surface": "#0D2E24", "primary": "#10B981" },
+    "dark": { "background": "#090D16", "surface": "#111827", "primary": "#3B82F6" },
+    "light": { "background": "#F8FAFC", "surface": "#FFFFFF", "primary": "#2563EB" }
+  }
+}

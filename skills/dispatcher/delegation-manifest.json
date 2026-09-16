@@ -1,0 +1,20 @@
+{
+  "name": "artisan-skill-suite-manifest",
+  "version": "2.5.0",
+  "dispatcherStrategy": "progressive-disclosure-delegation",
+  "estimatedTokenReduction": "88%",
+  "skills": [
+    {
+      "id": "production-code-artisan",
+      "version": "2.5.0",
+      "triggers": ["sql", "security", "owasp", "api", "performance", "n+1", "error", "anti-slop"],
+      "path": "skills/production-code-artisan/SKILL.md"
+    },
+    {
+      "id": "muapi-ui-design",
+      "version": "0.1.0",
+      "triggers": ["ui", "ux", "mockup", "wireframe", "atomic", "ios", "android", "tokens"],
+      "path": "skills/muapi-ui-design/SKILL.md"
+    }
+  ]
+}

@@ -1,0 +1,9 @@
+# Production Code Artisan - .cursorrules
+# Enforce senior-architect standards on every AI generation
+1. ZERO SLOP: Complete every function fully. Never emit "// TODO: implement later" or dummy mocks.
+2. OWASP SECURITY: Parameterize all SQL/NoSQL queries. Never interpolate variables into queries or commands.
+3. SECRETS: Never hardcode API keys, passwords, or tokens. Validate process.env at startup.
+4. PERFORMANCE: Never query databases inside iterative loops (prevent N+1). Use batched Promise.all / IN queries.
+5. OBSERVABILITY: Catch errors as unknown, narrow type, log with context, and never swallow errors silently.
+6. STRICT TYPES: No "any" in TypeScript. Use generics, runtime Zod schemas, and exhaustive checks.
+7. MULTILINGUAL & RTL: Use CSS logical properties (padding-inline, margin-inline) and isolate numbers/LTR tokens with <bdi> in Arabic.
